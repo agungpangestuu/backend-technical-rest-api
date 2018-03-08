@@ -13,6 +13,7 @@ const app = express();
 const config = require('./configDb');
 
 // *** mongoose *** ///
+mongoose.Promise = global.Promise
 mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
   if(err) {
     console.log('Error connecting to the database. ' + err);
@@ -30,7 +31,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", index);
-app.use("/news", require("./routes/news"));
+app.use("/api/news", require("./routes/news"));
+app.use("/api/topic", require("./routes/topic"));
 app.use("/users", require("./routes/users"));
 
 // catch 404 and forward to error handler

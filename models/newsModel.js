@@ -11,7 +11,7 @@ const newsSchema = new Schema({
     required: true
     // trim : true
   },
-  description: {
+  deskripsi: {
     type: String,
     required: true
   },
@@ -21,8 +21,13 @@ const newsSchema = new Schema({
   },
   topicId: [{
     type: Schema.Types.ObjectId,
-    ref: "Topic"
-  }]
+    ref: "Topic",
+    default: []
+  }],
+  status: {
+    type: String,
+    default: "draft"
+  }
 });
 
 const newsModels = mongoose.model("News", newsSchema);
