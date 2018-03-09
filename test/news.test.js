@@ -19,7 +19,7 @@ describe("CRUD News", () => {
   it("should add a SINGLE News on /news POST", done => {
     chai
       .request('http://localhost:3000')
-      .post("/news")
+      .post("/api/news")
       .type('form')
       .send({
         image: "http://jhkahkak.com",
@@ -55,23 +55,25 @@ describe("CRUD News", () => {
   it("should list ALL blobs on /news GET", function(done) {
     chai
       .request(app)
-      .get("/news")
+      .get("/api/news")
       .end(function(err, res) {
         console.log(res.body)
         if(err) console.log(err)
         else {
           res.should.have.status(200);
           res.should.be.json;
-          res.body.should.be.a("array");
-          res.body[0].should.have.property("_id");
-          res.body[0].should.have.property("image");
-          res.body[0].should.have.property("title");
-          res.body[0].should.have.property("deskripsi");
-          res.body[0].should.have.property("topic");
-          res.body[0].image.should.equal("http://jhkahkak.com");
-          res.body[0].title.should.equal("pemilu 2019");
-          res.body[0].deskripsi.should.equal("lorem ipsum");
-          res.body[0].topic.should.be.a("array");
+          res.body.should.be.a("object");
+          res.body.should.have.property("SUCCESS");
+          res.body.SUCCESS.should.be.a("array");
+          res.body.SUCCESS[0].should.have.property("_id");
+          res.body.SUCCESS[0].should.have.property("image");
+          res.body.SUCCESS[0].should.have.property("title");
+          res.body.SUCCESS[0].should.have.property("deskripsi");
+          res.body.SUCCESS[0].should.have.property("topic");
+          res.body.SUCCESS[0].image.should.equal("http://jhkahkak.com");
+          res.body.SUCCESS[0].title.should.equal("pemilu 2019");
+          res.body.SUCCESS[0].deskripsi.should.equal("lorem ipsum");
+          res.body.SUCCESS[0].topic.should.be.a("array");
           // res.body[0].topic[0].should.be.a("object");
           // res.body[0].topic[0].should.have.property("_id");
           // res.body[0].topic[0].should.have.property("name");
@@ -90,7 +92,7 @@ describe("CRUD News", () => {
     newNews.save().then(data =>  {
       chai
         .request(app)
-        .get("/news/" + data._id)
+        .get("/api/news/" + data._id)
         .end(function(err, res) {
           res.should.have.status(200);
           res.should.be.json;
@@ -115,11 +117,11 @@ describe("CRUD News", () => {
   
   it("should update a SINGLE News on /news/<id> PUT", (done) => {
     chai.request(app)
-    .get('/news')
+    .get('/api/news')
     .end(function(err, res){
       console.log("ini put",res.body)
       chai.request(app)
-        .put('/news/'+res.body[0]._id)
+        .put('/api/news/'+res.body[0]._id)
         .send({'title': 'Spider'})
         .end(function(error, response){
           response.should.have.status(200);
@@ -136,10 +138,10 @@ describe("CRUD News", () => {
   });
   it("should delete a SINGLE News on /news/<id> DELETE", (done) => {
     chai.request(app)
-    .get('/news')
+    .get('/api/news')
     .end(function(err, res){
       chai.request(app)
-        .delete('/news/'+res.body[0]._id)
+        .delete('/api/news/'+res.body[0]._id)
         .end(function(error, response){
           response.should.have.status(200);
           response.should.be.json;
@@ -155,4 +157,3 @@ describe("CRUD News", () => {
   });
 });
 
-console.log(process.env.NODE_ENV);
