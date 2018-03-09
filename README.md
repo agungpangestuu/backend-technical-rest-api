@@ -33,4 +33,19 @@ npm install
 npm start
 npm run dev
 ```
-Access the website via `http://localhost:3000` or `https://rest-api-northen.herokuapp.com`
+Access the website via `http://localhost:3000` or `https://rest-api.pangestu.tech`
+
+## Usage Api
+
+to create News :
+
+data must be require 
+```
+curl -X POST -H 'Content-Type: application/json' -d '{"image":"http://testImage.com","title":"test title","deskripsi": "lorem ipsum", "status": "publish"}' http://rest-api.pangestu.tech:3000
+```
+if you want to insert tag or topic you must be include it in form 
+
+```
+curl -X POST -H 'Content-Type: application/json' -d '{"image":"http://testImage.com","title":"test title","deskripsi": "lorem ipsum", "status": "publish", "topicId": ["5aa1400579edf145f843b640", "5aa14048609f0246423d0282"]}' http://rest-api.pangestu.tech:3000
+
+```
